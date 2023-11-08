@@ -1,9 +1,5 @@
 import json
-import os
-
 from django.core.management import BaseCommand
-from django.shortcuts import get_object_or_404
-
 from mainapp.models import Category, Product
 
 

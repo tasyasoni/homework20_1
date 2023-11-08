@@ -1,0 +1,29 @@
+{% extends 'mainapp/base.html' %}
+{% block content%}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ title }}</h1>
+    <p class="lead">Product_store - это отличный вариант покупки свежих продуктов с быстрой доставкой</p>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Еженедельная подписка</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">200 RUB</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>- Бесплатная доставка</li>
+                        <li>- Бесплатная сборка</li>
+                        <li>- Дешевле, чем на полке</li>
+                        <li>- Удобный интервал доставки</li>
+                    </ul>
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

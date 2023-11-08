@@ -1,9 +1,14 @@
 from django import template
 
-from mainapp.models import Product
-
 register = template.Library()
 
 
-# @register.filter()
-# pass
+@register.filter()
+def media_pic(val):
+    if val:
+        return f'media/{val}'
+    return"#"
+
+
+
+

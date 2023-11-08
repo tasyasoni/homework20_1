@@ -1,0 +1,50 @@
+[
+  {
+    "model": "mainapp.category",
+    "pk":1,
+    "fields": {
+      "name": "Фрукты",
+      "description": "фрукты, ягоды, заморозка"
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 2,
+    "fields": {
+      "name": "Овощи",
+      "description": "Овощи, заморозка, п/ф"
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 3,
+    "fields": {
+      "name": "Мясо",
+      "description": "Свинина, говядина, баранина"
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 4,
+    "fields": {
+      "name": "Птица",
+      "description": "курица, индейка, утка"
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 5,
+    "fields": {
+      "name": "Бакалея",
+      "description": "Конфеты, макароны, хлопья"
+    }
+  },
+  {
+    "model": "mainapp.category",
+    "pk": 6,
+    "fields": {
+      "name": "Хлеб",
+      "description": "Хлеб, булки, выпечка"
+    }
+  }
+]

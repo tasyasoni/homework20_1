@@ -1,0 +1,93 @@
+[
+  {
+    "model": "mainapp.product",
+    "pk": 1,
+    "fields": {
+      "name": "Вишня",
+      "description": "спелая, Крымская",
+      "picture": "",
+      "category": 1,
+      "price": 1000.00,
+      "data_life": "2023-11-07T13:00:44.057Z",
+      "data_chadge": null
+    }
+  },
+  {
+    "model": "mainapp.product",
+    "pk": 2,
+    "fields": {
+      "name": "Утка",
+      "description": "Утка (стейк)",
+      "picture": "",
+      "category": 4,
+      "price": 2000.00,
+      "data_life": "2023-11-07T13:01:11.272Z",
+      "data_chadge": null
+    }
+  },
+    {
+    "model": "mainapp.product",
+    "pk": 3,
+    "fields": {
+      "name": "Курица",
+      "description": "Курица (филе)",
+      "picture": "",
+      "category": 4,
+      "price": 1500.00,
+      "data_life": "2023-11-07T13:01:11.272Z",
+      "data_chadge": null
+    }
+  },
+    {
+    "model": "mainapp.product",
+    "pk": 4,
+    "fields": {
+      "name": "Печенье",
+      "description": "Печенье Юбилейное",
+      "picture": "",
+      "category": 6,
+      "price": 2000.00,
+      "data_life": "2023-11-07T13:01:11.272Z",
+      "data_chadge": null
+    }
+  },
+    {
+    "model": "mainapp.product",
+    "pk": 5,
+    "fields": {
+      "name": "Макароны",
+      "description": "Макароны Барилла",
+      "picture": "",
+      "category": 4,
+      "price": 9000.00,
+      "data_life": "2023-11-07T13:01:11.272Z",
+      "data_chadge": null
+    }
+  },
+    {
+    "model": "mainapp.product",
+    "pk": 6,
+    "fields": {
+      "name": "Арбуз",
+      "description": "Арбуз Астраханский юез косточек",
+      "picture": "",
+      "category": 1,
+      "price": 7000.00,
+      "data_life": "2023-11-07T13:01:11.272Z",
+      "data_chadge": null
+    }
+  },
+    {
+    "model": "mainapp.product",
+    "pk": 7,
+    "fields": {
+      "name": "Картофель",
+      "description": "Картофель молодой",
+      "picture": "",
+      "category": 2,
+      "price": 500.00,
+      "data_life": "2023-11-07T13:01:11.272Z",
+      "data_chadge": null
+    }
+  }
+]

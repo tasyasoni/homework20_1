@@ -10,7 +10,12 @@ def products(request):
     }
     return render(request, 'mainapp/products.html', context)
 
-
+def product(request, pk):
+    context = {
+        'object': Product.objects.get(pk=pk),
+        'title': 'О товаре'
+    }
+    return render(request, 'mainapp/product.html', context)
 
 def contacts(request):
     context = {

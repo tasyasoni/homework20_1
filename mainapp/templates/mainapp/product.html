@@ -1,0 +1,25 @@
+{% extends 'mainapp/base.html' %}
+{% block content%}
+
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">{{ title }}</h1>
+    </div>
+    <div class="row text-center">
+        <div class="col-5">
+           <div class="card mb-4 rounded-3 shadow-sm border-primary">
+              <div class="card-header py-3 text-white bg-primary border-primary">
+                <h4 class="my-0 fw-normal">{{ object.name|slice:35 }}</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{object.price}}<small class="text-muted fw-light">/RUB</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>{{ object.description|slice:100 }}</li>
+                  <li>Дата поступления: {{ object.data_life}}</li>
+                </ul>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:products' %}">Вернуться в каталог</a>
+              </div>
+            </div>
+        </div>
+{% endblock %}
+

@@ -14,7 +14,7 @@
                  {% for object in objects_list %}
                  <div class="col">
                      <div class="card shadow-sm">
-                         <div class="card mb-4 box-shadow"><div>
+                         <div class="card mb-8 box-shadow"><div>
                          <img class = "card-img-top"
 <!--                              src = "/media/{{ object.picture }}/"-->
                               <src ="{{object.picture|media_pic}}"/>
@@ -25,6 +25,7 @@
                               <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">{{object.price}}</button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Положить в корзину</button>
+                                <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:product' object.pk %}">О товаре</a>
                               </div>
                               <small class="text-muted">RUB</small>
                             </div>

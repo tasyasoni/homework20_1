@@ -28,11 +28,17 @@
                                 <p class="card-text">{{ object|title }}.</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a class="p-2 btn btn-outline-primary" href="{% url 'blogapp:view' object.pk %}">Прочитать статью</a>
-                                        <a class="p-2 btn btn-outline-primary" href="{% url 'blogapp:update' object.pk %}">Редактировать статью</a>
-                                        <a class="p-2 btn btn-outline-danger" href="{% url 'blogapp:delete' object.pk %}">Удалить статью</a>
+                                        <a class="p-1 btn btn-outline-primary" href="{% url 'blogapp:view' object.pk %}">Прочитать статью</a>
+                                        <a class="p-1 btn btn-outline-primary" href="{% url 'blogapp:update' object.pk %}">Редактировать статью</a>
+                                        <a class="p-1 btn btn-outline-danger" href="{% url 'blogapp:delete' object.pk %}">Удалить статью</a>
                                     </div>
 
+                                    </div>
+                                    {% if object.public_sign %}
+                                    <a class="p-1 btn btn-outline-danger" href="{% url 'blogapp:toggle' object.pk %}">Убрать видимость</a>
+                                    {% else%}
+                                    <a class="p-1 btn btn-outline-success" href="{% url 'blogapp:toggle' object.pk %}">Сделать видимой</a>
+                                    {% endif%}
                               </div>
                                 {% endfor %}
                                 </div>

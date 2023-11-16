@@ -23,7 +23,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100, verbose_name='наименование')
+    name = models.CharField(max_length=100, verbose_name='наименование', unique=True, **NULLABLE)
     description = models.TextField(max_length=500, verbose_name='описание')
     picture = models.ImageField(upload_to = 'mainapp', verbose_name='картинка', **NULLABLE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
@@ -41,4 +41,16 @@ class Product(models.Model):
         verbose_name_plural = 'продукты'
 
 
+class Version(models.Model):
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='id_product')
+    number_version = models.IntegerField(verbose_name='номер_версии')
+    name = models.CharField(max_length=100, verbose_name='наименование')
+    current_version = models.BooleanField(default=True, verbose_name='признак_текущей_версии')
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
 

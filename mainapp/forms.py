@@ -2,12 +2,23 @@ from django import forms
 from mainapp.models import Product, Version
 
 
-class ProductForm(forms.ModelForm):
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
         # fields = '__all__'
         fields = ('name', 'description', 'category', 'picture', 'price',)
         # excude = ('is_active',)
+
+
+
+
 
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']

@@ -1,7 +1,7 @@
 {% extends 'mainapp/base.html' %}
 
 {% block content %}
-<div method="post">
+<form method="post">
     <div class="col-12"><div/>
         <div class="row">
             <div class="col-6">
@@ -34,9 +34,12 @@
                     Создать
                     {% endif %}
                     </button>
-                    <a href="{% url 'mainapp:products' %}" type="button"
+                    <a href="{% url 'mainapp:list' %}" type="button"
                     class="btn btn-outline-secondary">Назад</a>
                 </div>
             </div>
-    </form></div>
+         </div>
+    </div>
+</div>
+</form></div>
 {% endblock %}

@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
 
     <div class="row text-center">
-        <div class="col-5">
+        <div class="col-6">
            <div class="card mb-4 rounded-3 shadow-sm border-primary">
               <div class="card-header py-3 text-white bg-primary border-primary">
                 <h4 class="my-0 fw-normal">{{ object.name|slice:35 }}</h4>
@@ -19,7 +19,15 @@
                   <li>{{ object.description|slice:100 }}</li>
                   <li>Дата поступления: {{ object.data_life}}</li>
                 </ul>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:products' %}">Вернуться в каталог</a>
+              </div>
+              <div class="card-body">
+                  <ul class="list-unstyled mt-3 mb-4">
+                  <li>Номер активной версии<small class="text-muted fw-light"> <font color="blue" size = '3'>/ {{ object.active_version_name }}</font></small></li>
+                  <li>Активная версия<small class="text-muted fw-light"><font color="blue" size = '3'>/ {{ object.active_version_number }}</font></small></li>
+
+                </ul>
+              </div>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:list' %}">Вернуться в каталог</a>
               </div>
             </div>
         </div>

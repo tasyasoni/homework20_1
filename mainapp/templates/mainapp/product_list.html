@@ -1,0 +1,63 @@
+{% extends 'mainapp/base.html' %}
+{% block content%}
+
+    {% load static %}
+    {% load my_tags_lib %}
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">{{ title }}</h1>
+    </div>
+    <div class="row justify-content-center">
+
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+               </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card shadow-sm">
+                    </div>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:create' %}">Создать продукт</a>
+                        <div class="card mb-6 box-shadow">
+                           {% for object in object_list %}
+                            {% if object.active_version_number != None%}
+                            <p><div class="card-body">
+                                </div>
+                              <img class="card-img-top"
+                                 src="/media/{{ object.picture }}">
+                                 <alt="Card image cap">
+                                <p class="card-text ms-3"><font color="green" size = '4'>{{ object|title }}<font>
+                                <button type="button" class="btn btn-sm btn-outline-secondary"><font color="green" size = '3'>{{object.price}}<font></button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary"><font color="green" size = '3'>RUB<font></button></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group ms-3" >
+                                        <a class="p-1 btn btn-outline-primary" href="{% url 'mainapp:detail' object.pk %}">О товаре</a>
+                                        <a class="p-1 btn btn-outline-primary" href="{% url 'mainapp:update' object.pk %}">Изменить товар</a>
+                                        <a class="p-1 btn btn-outline-danger" href="{% url 'mainapp:delete' object.pk %}">Удалить товар</a>
+                                    </div>
+                                </div></p>
+                              {% else %}
+                              <p><div class="card mb-6 box-shadow">
+                                 <div class="card-body">
+                                </div>
+                                 <img class="card-img-top"
+                                 src="/media/{{ object.picture }}">
+                                 <alt="Card image cap">
+                                <p class="card-text ms-3"><font color="gray" size = '3'>{{ object|title }}
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Нет в наличии</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">RUB </button></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group ms-3" >
+                                        <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:detail' object.pk %}">О товаре</a>
+                                        <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:update' object.pk %}">Изменить товар</a>
+                                        <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:delete' object.pk %}">Удалить товар</a>
+                                    </div>
+                                </div></p>
+                             {% endif %}
+                           {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

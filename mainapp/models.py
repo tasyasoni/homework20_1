@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models, connection
 
 NULLABLE = {'null': True, 'blank': True}
@@ -29,7 +30,8 @@ class Product(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=6, decimal_places=0, verbose_name='цена')
     data_life = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
-    data_chadge = models.DateField(**NULLABLE, verbose_name= 'дата_изменения')
+    data_chadge = models.DateField(**NULLABLE, verbose_name='дата_изменения')
+    owner = models.ForeignKey('usersapp.User', on_delete=models.SET_NULL, verbose_name='id_пользователя', **NULLABLE)
 
 
     def __str__(self):

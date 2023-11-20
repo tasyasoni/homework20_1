@@ -29,7 +29,7 @@ class UserProfileForm(StyleFormMixin, UserChangeForm):
         model = User
         fields = ('email', 'first_name', 'last_name', 'avatar', 'country',)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # убирает информацию про кодировку пароля в профиле
         super().__init__(*args, **kwargs)
         print(self.fields)
 

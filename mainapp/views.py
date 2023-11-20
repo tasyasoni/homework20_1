@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.context_processors import request
@@ -7,9 +8,10 @@ from mainapp.forms import ProductForm, VersionForm
 from mainapp.models import Product, Version
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'mainapp.add_product'
     # fields = ('name', 'description', 'category', 'picture', 'price',)
     # template_name = 'mainapp/product_form.html'
     success_url = reverse_lazy('mainapp:list')
@@ -44,9 +46,10 @@ class ProductCreateView(CreateView):
 
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'mainapp.change_product'
     success_url = reverse_lazy('mainapp:list')
 
 
@@ -62,27 +65,26 @@ class ProductUpdateView(UpdateView):
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
         self.object = form.save()
-        try:
-            self.object.owner = self.request.user
-        except ValueError:
-            return redirect(reverse('usersapp:login'))
-
-        else:
-            formset = self.get_context_data()['formset']
-            self.object = form.save()
+        if self.object.owner == self.request.user:
             self.object.save()
             if formset.is_valid():
                 formset.instance = self.object
                 formset.save()
                 return super().form_valid(form)
 
+        return reverse('mainapp:list')
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     form_clss = ProductForm
     # template_name = 'mainapp/product_list.html'
     success_url = reverse_lazy('mainapp:list')
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        # queryset = queryset.filter(public_sign=True)
+        return queryset
 
 
     def get_context_data(self, **kwargs):
@@ -90,15 +92,12 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
 
         for product in context['object_list']:
-            # print(product)
-            # print(context)
             active_version = product.version_set.filter(current_version=True).first()
-            # print(active_version)
+
             if active_version:
                 product.active_version_number = active_version.number_version
                 product.active_version_name = active_version.name
-                # print(product.active_version_number)
-                # print(product.active_version_name)
+
             else:
                 product.active_version_number = None
                 product.active_version_name = None
@@ -116,7 +115,7 @@ class ProductListView(ListView):
 #     return render(request, 'mainapp/product_list.html', context)
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'mainapp/product_detail.html'
 
@@ -144,9 +143,10 @@ class ProductDetailView(DetailView):
 #     }
 #     return render(request, 'mainapp/product_detail.html', context)
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('mainapp:list')
+    permission_required = 'mainapp.delete_product'
 
     def get_success_url(self):
         if self.request.user == 'AnonymousUser':
@@ -178,3 +178,13 @@ def home(request):
     return render(request, 'mainapp/home.html', context)
 
 
+def toggle_publish(request, pk):
+    product_item = get_object_or_404(Product, pk=pk)
+    if product_item.is_published:
+        product_item.is_published = False
+    else:
+        product_item.is_published = True
+
+    product_item.save()
+
+    return redirect(reverse('mainapp:list'))

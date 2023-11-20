@@ -14,13 +14,14 @@
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="card shadow-sm">
                     </div>
                     <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:create' %}">Создать продукт</a>
                         <div class="card mb-6 box-shadow">
                            {% for object in object_list %}
                             {% if object.active_version_number != None%}
+                            {% if object.is_published %}
                             <p><div class="card-body">
                                 </div>
                               <img class="card-img-top"
@@ -35,8 +36,9 @@
                                         <a class="p-1 btn btn-outline-primary" href="{% url 'mainapp:update' object.pk %}">Изменить товар</a>
                                         <a class="p-1 btn btn-outline-danger" href="{% url 'mainapp:delete' object.pk %}">Удалить товар</a>
                                     </div>
-                                </div></p>
-                              {% else %}
+                            {% endif%}
+                                </div>
+                            {% else %}
                               <p><div class="card mb-6 box-shadow">
                                  <div class="card-body">
                                 </div>
@@ -52,8 +54,9 @@
                                         <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:update' object.pk %}">Изменить товар</a>
                                         <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:delete' object.pk %}">Удалить товар</a>
                                     </div>
+
                                 </div></p>
-                             {% endif %}
+                            {% endif %}
                            {% endfor %}
                     </div>
                 </div>

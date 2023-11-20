@@ -32,6 +32,7 @@ class Product(models.Model):
     data_life = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
     data_chadge = models.DateField(**NULLABLE, verbose_name='дата_изменения')
     owner = models.ForeignKey('usersapp.User', on_delete=models.SET_NULL, verbose_name='id_пользователя', **NULLABLE)
+    is_published = models.BooleanField(default=False, verbose_name='признак_публикации')
 
 
     def __str__(self):

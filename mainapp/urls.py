@@ -2,7 +2,8 @@ from django.urls import path
 
 from mainapp import views
 from mainapp.apps import MainappConfig
-from mainapp.views import ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView
+from mainapp.views import ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView, \
+    toggle_publish
 
 app_name = MainappConfig.name
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path('create/', ProductCreateView.as_view(), name='create'),
     path('update/<int:pk>/', ProductUpdateView.as_view(), name='update'),
     path('delete/<int:pk>/', ProductDeleteView.as_view(), name='delete'),
+    path('toggle/<int:pk>/', toggle_publish, name='toggle'),
 ]

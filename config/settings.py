@@ -141,6 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'usersapp.User'
 LOGOUT_REDIRECT_URL = '/home'
 LOGIN_REDIRECT_URL = '/home'
+LOGIN_URL = '/usersapp/register/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #из Джанго
 EMAIL_HOST = 'smtp.yandex.ru'  #адрес почтового сервера только для яндекс

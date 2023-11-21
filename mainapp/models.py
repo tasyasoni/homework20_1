@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models, connection
 
+
 NULLABLE = {'null': True, 'blank': True}
 
 
@@ -56,4 +57,5 @@ class Version(models.Model):
     class Meta:
         verbose_name = 'версия'
         verbose_name_plural = 'версии'
+
 

@@ -17,11 +17,13 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="card shadow-sm">
                     </div>
+                    {% if not user.is_staff %}
                     <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:create' %}">Создать продукт</a>
+                    {% endif%}
                         <div class="card mb-6 box-shadow">
                            {% for object in object_list %}
-                            {% if object.active_version_number != None%}
-                            {% if object.is_published %}
+                            {% if object.active_version_number != None and object.is_published %}
+
                             <p><div class="card-body">
                                 </div>
                               <img class="card-img-top"
@@ -34,11 +36,14 @@
                                     <div class="btn-group ms-3" >
                                         <a class="p-1 btn btn-outline-primary" href="{% url 'mainapp:detail' object.pk %}">О товаре</a>
                                         <a class="p-1 btn btn-outline-primary" href="{% url 'mainapp:update' object.pk %}">Изменить товар</a>
+                                        {% if not user.is_staff %}
                                         <a class="p-1 btn btn-outline-danger" href="{% url 'mainapp:delete' object.pk %}">Удалить товар</a>
+                                        {% endif%}
                                     </div>
-                            {% endif%}
+
                                 </div>
-                            {% else %}
+                             {% else %}
+
                               <p><div class="card mb-6 box-shadow">
                                  <div class="card-body">
                                 </div>
@@ -46,16 +51,19 @@
                                  src="/media/{{ object.picture }}">
                                  <alt="Card image cap">
                                 <p class="card-text ms-3"><font color="gray" size = '3'>{{ object|title }}
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Нет в наличии</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Не опубликовано</button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">RUB </button></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group ms-3" >
                                         <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:detail' object.pk %}">О товаре</a>
                                         <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:update' object.pk %}">Изменить товар</a>
+                                        {% if not user.is_staff %}
                                         <a class="p-1 btn btn-outline-secondary" href="{% url 'mainapp:delete' object.pk %}">Удалить товар</a>
+                                        {% endif%}
                                     </div>
 
                                 </div></p>
+
                             {% endif %}
                            {% endfor %}
                     </div>

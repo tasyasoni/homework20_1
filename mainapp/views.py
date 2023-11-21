@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.context_processors import request
@@ -16,6 +16,9 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     # template_name = 'mainapp/product_form.html'
     success_url = reverse_lazy('mainapp:list')
 
+
+
+
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         SubjectFormset = inlineformset_factory(Product, Version, form = VersionForm, extra =1)
@@ -29,24 +32,19 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
         self.object = form.save()
-        try:
-            self.object.owner = self.request.user
-        except ValueError:
-            return redirect(reverse('usersapp:login'))
+        self.object.owner = self.request.user
+        self.object.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
 
-        else:
-            formset = self.get_context_data()['formset']
-            self.object = form.save()
-            self.object.save()
-            if formset.is_valid():
-                formset.instance = self.object
-                formset.save()
-                return super().form_valid(form)
+        return super().form_valid(form)
 
 
 
 
-class ProductUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     permission_required = 'mainapp.change_product'
@@ -55,29 +53,31 @@ class ProductUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        SubjectFormset = inlineformset_factory(Product, Version, form = VersionForm, extra =1)
-        if self.request.method =='POST':
-            context_data['formset'] = SubjectFormset(self.request.POST, instance = self.object )
+        SubjectFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == "POST":
+            context_data['formset'] = SubjectFormset(self.request.POST, instance=self.object)
         else:
-            context_data['formset'] = SubjectFormset(instance = self.object)
+            context_data['formset'] = SubjectFormset(instance=self.object)
         return context_data
 
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
         self.object = form.save()
-        if self.object.owner == self.request.user:
+        if self.object.owner != self.request.user:
+            return redirect(reverse('usersapp:login'))
+        else:
             self.object.save()
             if formset.is_valid():
                 formset.instance = self.object
                 formset.save()
-                return super().form_valid(form)
+            return super().form_valid(form)
 
-        return reverse('mainapp:list')
 
 
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     form_clss = ProductForm
+    permission_required = 'mainapp.view_product'
     # template_name = 'mainapp/product_list.html'
     success_url = reverse_lazy('mainapp:list')
 
@@ -118,6 +118,7 @@ class ProductListView(LoginRequiredMixin, ListView):
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'mainapp/product_detail.html'
+    permission_required = 'mainapp.view_product'
 
 
     def get_context_data(self, **kwargs):
@@ -156,6 +157,16 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
         return reverse('usersapp:login')
 
 
+def toggle_publish(request, pk):
+    product_item = get_object_or_404(Product, pk=pk)
+    if product_item.is_published:
+        product_item.is_published = False
+    else:
+        product_item.is_published = True
+
+    product_item.save()
+
+    return redirect(reverse('mainapp:list'))
 
 
 def contacts(request):
@@ -178,13 +189,3 @@ def home(request):
     return render(request, 'mainapp/home.html', context)
 
 
-def toggle_publish(request, pk):
-    product_item = get_object_or_404(Product, pk=pk)
-    if product_item.is_published:
-        product_item.is_published = False
-    else:
-        product_item.is_published = True
-
-    product_item.save()
-
-    return redirect(reverse('mainapp:list'))

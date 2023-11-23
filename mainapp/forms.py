@@ -18,6 +18,20 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
 
 
 
+    def clean_name(self):
+        cleaned_data = self.cleaned_data['name']
+        prohibited_list = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция',
+                           'радар']
+        for obj in prohibited_list:
+            if obj in cleaned_data:
+                raise forms.ValidationError("Продукт запрещен на площадке")
+
+        return cleaned_data
+
+class ModeratorProductForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('description', 'category',)
 
 
     def clean_name(self):
@@ -29,6 +43,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
                 raise forms.ValidationError("Продукт запрещен на площадке")
 
         return cleaned_data
+
 
 
 class VersionForm(forms.ModelForm):

@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template.context_processors import request
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from mainapp.forms import ProductForm, VersionForm
+from mainapp.forms import ProductForm, VersionForm, ModeratorProductForm
 from mainapp.models import Product, Version
 
 
@@ -49,6 +49,17 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     form_class = ProductForm
     permission_required = 'mainapp.change_product'
     success_url = reverse_lazy('mainapp:list')
+
+
+
+    def get_form_class(self):
+        user = self.request.user
+
+        if user.is_staff:
+            form_class = ModeratorProductForm
+        else:
+            form_class = ProductForm
+        return form_class
 
 
     def get_context_data(self, **kwargs):

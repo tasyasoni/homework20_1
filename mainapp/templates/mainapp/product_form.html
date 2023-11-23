@@ -23,8 +23,10 @@
                     </div>
                 </div>
               </div>
+
             <div class="col-6">
                 <div class="card">
+                {% if not user.is_staff %}
                      <div class="card-header">
                      <h2>Введите данные версии </h2>
             </div>
@@ -34,6 +36,7 @@
                     {{form.as_p}}
                 {% endfor %}
             </div>
+            {% endif%}
                 <div class="btn-group">
                     <button type="submit" class="btn btn-success">
                     {% if object %}

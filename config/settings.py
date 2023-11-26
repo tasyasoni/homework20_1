@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -148,9 +151,19 @@ EMAIL_HOST = 'smtp.yandex.ru'  #адрес почтового сервера т�
 EMAIL_PORT = 465  # порт
 EMAIL_USE_SSL = True
 
-EMAIL_HOST_USER = 'TasyaSoni@yandex.ru'  #почта С которой отправляются нотифаи
-EMAIL_HOST_PASSWORD = 'cvianphhncvicpyh'   #реальный пароль -закрыть для гитхаб, создать портальный пароль
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  #почта С которой отправляются нотифаи
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')   #реальный пароль -закрыть для гитхаб, создать портальный пароль
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+
+CASH_ENABLE = os.getenv('CASH_ENABLE')
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
